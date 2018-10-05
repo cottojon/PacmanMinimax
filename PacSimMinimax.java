@@ -1,11 +1,17 @@
+import java.awt.Point;
+import java.util.ArrayList;
+import java.util.List;
+
 import pacsim.*;
 
 public class PacSimMinimax implements PacAction
 {
+	int depth;
 
 	public PacSimMinimax(int depth, String fname, int te, int gran, int max)
 	{
 		// optional: intialize some variables
+		this.depth = depth;
 		PacSim sim = new PacSim(fname, te, gran, max);
 		sim.init(this);
 	}
@@ -44,9 +50,18 @@ public class PacSimMinimax implements PacAction
 	{
 		PacCell[][] grid = (PacCell[][]) state;
 		PacFace newFace = null;
-
-		//build game tree with depth
 		
+		//get pacman location
+		PacmanCell currentPacmanCell = PacUtils.findPacman(grid);
+		//get pacman location
+		Point currentPacmanPoint = currentPacmanCell.getLoc();
+		//get ghost locations
+		List<Point> ghostPoints = PacUtils.findGhosts(grid);
+		//create root node of game tree
+		Node rootNode = new Node(currentPacmanPoint, ghostPoints.get(0), ghostPoints.get(1));
+		//build game tree with proper depth + 1, or just depth
+		Node.buildTree(this.depth, rootNode, grid);
+	
 		//alpha beta the tree
 		
 		//make decision on the next move based on what alpha beta returns
@@ -60,5 +75,7 @@ public class PacSimMinimax implements PacAction
 		// TODO Auto-generated method stub
 
 	}
+	
+	
 
 }
