@@ -138,7 +138,7 @@ public class Node
 					continue; // skip, not a valid move for ghost1
 				}
 
-				for (int k = 0; k < enumConstants.length; j++) 
+				for (int k = 0; k < enumConstants.length; k++) 
 				{
 					// get cell next to ghost1
 					PacCell nextGhost2Cell = PacUtils.neighbor(enumConstants[k], parent.getGhost2Point(), grid);
